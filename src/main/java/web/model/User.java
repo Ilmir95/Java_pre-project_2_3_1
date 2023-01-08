@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -90,5 +91,19 @@ public class User {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && age == user.age && Objects.equals(name, user.name) &&
+                Objects.equals(surname, user.surname) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() * 7 + surname.hashCode() * 11 + Integer.hashCode(age) * 13 + email.hashCode() * 17;
     }
 }
